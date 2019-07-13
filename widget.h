@@ -15,6 +15,7 @@ public:
     explicit Widget(QWidget *parent = nullptr);
     ~Widget();
     void changeMONEY(int n);
+
     int MONEY {0};
     int &r = MONEY;
 
