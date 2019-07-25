@@ -14,10 +14,11 @@ class Widget : public QWidget
 public:
     explicit Widget(QWidget *parent = nullptr);
     ~Widget();
-    void changeMONEY(int n);
 
-    int MONEY {0};
-    int &r = MONEY;
+    void changemoney(int n);
+
+    int money {0};
+    int &r = money;
 
 private slots:
     void on_pb10_clicked();

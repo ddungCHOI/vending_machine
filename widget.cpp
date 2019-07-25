@@ -2,11 +2,11 @@
 #include "ui_widget.h"
 #include <QMessageBox>
 
-
 Widget::Widget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Widget)
-{   ui->setupUi(this);
+{
+    ui->setupUi(this);
     ui->pbcoffee->setEnabled(false);
     ui->pbtea->setEnabled(false);
     ui->pbcoke->setEnabled(false);
@@ -17,26 +17,26 @@ Widget::~Widget()
     delete ui;
 }
 
-void Widget::changeMONEY(int n) {
-    MONEY += n;
-    ui->lcdNumber->display(MONEY);
+void Widget::changemoney(int n) {
+    money += n;
+    ui->lcdNumber->display(money);
 
-    if (MONEY >= 200){
+    if (money >= 200){
         ui->pbcoffee->setEnabled(true);
         ui->pbtea->setEnabled(true);
         ui->pbcoke->setEnabled(true);
     }
-    if (MONEY < 200 && MONEY >= 150){
+    if (money < 200 && money >= 150){
         ui->pbcoffee->setEnabled(true);
         ui->pbtea->setEnabled(true);
         ui->pbcoke->setEnabled(false);
     }
-    if (MONEY < 150 && MONEY >= 100){
+    if (money < 150 && money >= 100){
         ui->pbcoffee->setEnabled(true);
         ui->pbtea->setEnabled(false);
         ui->pbcoke->setEnabled(false);
     }
-    if (MONEY < 100){
+    if (money < 100){
         ui->pbcoffee->setEnabled(false);
         ui->pbtea->setEnabled(false);
         ui->pbcoke->setEnabled(false);
@@ -45,69 +45,66 @@ void Widget::changeMONEY(int n) {
 
 void Widget::on_pb10_clicked()
 {
-    changeMONEY(10);
-
+    changemoney(10);
 }
 
 void Widget::on_pb50_clicked()
 {
-    changeMONEY(50);
-
+    changemoney(50);
 }
 
 void Widget::on_pb100_clicked()
 {
-    changeMONEY(100);
-
+    changemoney(100);
 }
 
 void Widget::on_pb500_clicked()
 {
-    changeMONEY(500);
+    changemoney(500);
 }
 
 void Widget::on_pbcoffee_clicked()
 {
-    changeMONEY(-100);
+    changemoney(-100);
 }
 
 void Widget::on_pbtea_clicked()
 {
-    changeMONEY(-150);
+    changemoney(-150);
 }
 
 void Widget::on_pbcoke_clicked()
 {
-    changeMONEY(-200);
+    changemoney(-200);
 }
 
 void Widget::on_pbreturn_clicked()
 {
     QMessageBox msg;
-
     int coin[4] = {0};
-    for (int var = 0; MONEY > 0 ; ++var) {
-        if (MONEY % 500 == 0){
+
+    for (int var = 0; money > 0 ; ++var) {
+        if (money % 500 == 0){
+            money -= 500;
             ++coin[0];
-            MONEY -= 500;
             continue;
         }
-        else if (MONEY % 100 == 0){
+        else if (money % 100 == 0){
+            money -= 100;
             ++coin[1];
-            MONEY -= 100;
             continue;
         }
-        else if (MONEY % 50 == 0){
+        else if (money % 50 == 0){
+            money -= 50;
             ++coin[2];
-            MONEY -= 50;
             continue;
         }
         else {
+            money -= 10;
             ++coin[3];
-            MONEY -= 10;
             continue;
         }
 
     }
-    msg.information(nullptr, "return", "500 : " + QString::number(coin[0]) + "\n" + "100 : " + QString::number(coin[1]) + "\n" + "50 : " + QString::number(coin[2]) + "\n" + "10 : " + QString::number(coin[3]));
+    msg.information(nullptr, "return", "500원 : " + QString::number(coin[0]) + "개 받고\n100원 : " + QString::number(coin[1]) + "개 받고\n50원 : " + QString::number(coin[2]) + "받고\n10원 : " + QString::number(coin[3]) + "개 받음");
 }
